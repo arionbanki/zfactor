@@ -1,15 +1,16 @@
 extern crate over_under;
-extern crate rand;
+extern crate colored;
 
 use over_under::Game;
 use std::io;
 use std::process;
+use colored::*;
 
 fn main() {
-    println!("Velkominn í yfir undir");
+    println!("{}","Velkominn í Yfir-Undir".black().on_green());
     println!("Stokka spil...");
     println!("Skipti stokk í tvennt..");
-    println!("Veldu viðmót leikstjóra: Elskulegur (e) eða algjör asni (a)");
+    println!("Veldu viðmót leikstjóra: {} eða {}", "Elskulegur (e)".yellow(), "algjör asni (a)".red());
     let mut dealer_attitute = String::new();
     io::stdin().read_line(&mut dealer_attitute).expect("Failed to read line");
     dealer_attitute = dealer_attitute.trim().to_lowercase();
@@ -22,7 +23,7 @@ fn main() {
     }
 
     let mut game = Game::new();
-    println!("Fyrsta spilið er {}", get_card_name(game.show_next_card()));
+    println!("Fyrsta spilið er {}", get_card_name(game.show_next_card()).cyan());
 
     for _i in 0..game.total_rounds {
         println!("Giskaðu hvort að næsta spil er yfir eða undir (y/u)");
@@ -56,15 +57,15 @@ fn main() {
 
         if dealer_attitute == "e" {
             if correct_guess {
-                println!("Rétt. Frábært hjá þér, ég vissi að þú gætir þetta. Næsta spil er {}. Staðan er {}-{}", get_card_name(game.show_next_card()), game.dealer_score, game.player_score);
+                println!("{}Frábært hjá þér, ég vissi að þú gætir þetta. Næsta spil er {}. Staðan er {}-{}", "Rétt. ".green(), get_card_name(game.show_next_card()).cyan(), game.dealer_score, game.player_score);
             } else {
-                println!("Rangt. Næstum því, þetta var samt flott ágiskun. Næsta spil er {}. Staðan er {}-{}", get_card_name(game.show_next_card()), game.dealer_score, game.player_score);
+                println!("{}Næstum því, þetta var samt flott ágiskun. Næsta spil er {}. Staðan er {}-{}", "Rangt. ".red(), get_card_name(game.show_next_card()).cyan(), game.dealer_score, game.player_score);
             }
         } else {
             if correct_guess {
-                println!("Rétt. Djöfulsins heppni hjá þér. Næsta spil er {}. Staðan er {}-{}", get_card_name(game.show_next_card()), game.dealer_score, game.player_score);
+                println!("{}Djöfulsins heppni hjá þér. Næsta spil er {}. Staðan er {}-{}", "Rétt. ".green(), get_card_name(game.show_next_card()).cyan(), game.dealer_score, game.player_score);
             } else {
-                println!("Rangt. Þetta var glatað hjá þér, þú ert svo ömurlegur. Næsta spil er {}. Staðan er {}-{}", get_card_name(game.show_next_card()), game.dealer_score, game.player_score);
+                println!("{}Þetta var glatað hjá þér, þú ert svo ömurlegur. Næsta spil er {}. Staðan er {}-{}", "Rangt. ".red(), get_card_name(game.show_next_card()).cyan(), game.dealer_score, game.player_score);
             }
         }
     }
@@ -81,10 +82,10 @@ fn get_card_name(card_number: i32) -> String {
     let card_type = card_number % 13;
     let card_sort_name: String;
     match card_sort {
-        0 => card_sort_name = String::from("hjarta"),
-        1 => card_sort_name = String::from("spaða"),
-        2 => card_sort_name = String::from("tígul"),
-        3 => card_sort_name = String::from("laufa"),
+        0 => card_sort_name = String::from("♥"),
+        1 => card_sort_name = String::from("♠"),
+        2 => card_sort_name = String::from("♦"),
+        3 => card_sort_name = String::from("♣"),
         _ => card_sort_name = String::from("jóker")
     }
     let card_type_name: String;
@@ -102,7 +103,7 @@ fn get_card_name(card_number: i32) -> String {
         10 => card_type_name = String::from("gosi"),
         11 => card_type_name = String::from("drottning"),
         12 => card_type_name = String::from("kóngur"),
-        _ => card_type_name = String::from("")
+        _ => card_type_name = String::from("jóker")
     }
 
     format!("{} {}", card_sort_name, card_type_name)
