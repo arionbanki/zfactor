@@ -1,0 +1,12 @@
+[package]
+name = "over_under"
+version = "0.1.0"
+authors = ["Jónas Árnason <jonas.arnason@arionbanki.is>"]
+
+[lib]
+name = "over_under"
+path = "src/lib.rs"
+
+[dependencies]
+rand = "0.5"
+colored = "1.6"
